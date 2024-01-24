@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
+import { Constants } from './Constants';
 
-function App() {
+const DEFAULT_COUNT = 500;
+
+export default function App() {
+
+  const [ count, setCount ] = useState(500);
+
+  useEffect(() => {
+    if (!localStorage.getItem('currentCount')) {
+      localStorage.setItem('currentCount', DEFAULT_COUNT);
+      setCount(DEFAULT_COUNT);
+    } else {
+      setCount(localStorage.getItem('currentCount'));
+    }
+  }, [])
+  
+  useEffect(() => {
+    localStorage.setItem('currentCount', count);
+  }, [count] )
+
+  const decrement = () => {
+    setCount(count => count - 1);
+  };
+
+  const getCountColor = () => {
+    if (count >= (DEFAULT_COUNT * 0.7)) {
+      return Constants.GOOD;
+    }
+
+    if ( count >= (DEFAULT_COUNT * 0.5)) {
+      return Constants.MODERATE;
+    }
+
+    if (count >= (DEFAULT_COUNT * 0.3)) {
+      return Constants.WARNING;
+    }
+
+    if (count >= (DEFAULT_COUNT * 0.1)) {
+      return Constants.DANGER;
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container' onClick={decrement}>
+      <div className='count' style={{ color: getCountColor()}}>{count}</div>
     </div>
   );
 }
-
-export default App;
