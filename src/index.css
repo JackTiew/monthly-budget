@@ -17,10 +17,21 @@ html, body {
     justify-content: center;
     align-items: center;
     user-select: none;
+    flex-direction: column;
 }
 
 .count {
     font-size: 200px;
     text-align: center;
     font-weight: 700;
+}
+
+.resetButton {
+    cursor: pointer;
+    font-size: 50px;
+    background-color: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    padding: 20px;
 }

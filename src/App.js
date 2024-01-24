@@ -24,6 +24,11 @@ export default function App() {
     setCount(count => count - 1);
   };
 
+  const reset = (e) => {
+    e.stopPropagation();
+    setCount(DEFAULT_COUNT);
+  }
+
   const getCountColor = () => {
     if (count >= (DEFAULT_COUNT * 0.7)) {
       return Constants.GOOD;
@@ -45,6 +50,11 @@ export default function App() {
   return (
     <div className='container' onClick={decrement}>
       <div className='count' style={{ color: getCountColor()}}>{count}</div>
+      <div style={{ position: 'absolute', bottom: 50 }}>
+        <button className='resetButton' onClick={reset}>
+          RESET
+        </button>
+      </div>
     </div>
   );
 }
