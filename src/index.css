@@ -20,6 +20,22 @@ html, body {
     flex-direction: column;
 }
 
+.timeSection {
+    display: flex;
+    flex-direction: column;
+    font-size: 80px;
+    align-items: center;
+    position: absolute;
+    top: 50px;
+}
+
+.sessionCount {
+    color: #FF9AA1;
+    font-size: 35px;
+    position: absolute;
+    bottom: 345px;
+}
+
 .count {
     font-size: 200px;
     text-align: center;
@@ -34,4 +50,10 @@ html, body {
     border: none;
     border-radius: 50px;
     padding: 20px;
+}
+
+.countInput {
+    position: absolute;
+    bottom: -100px;
+    padding-bottom: 50px;
 }

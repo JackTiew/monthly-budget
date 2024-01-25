@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Constants } from './Constants';
+import CommonHelper from './CommonHelper';
 
 const DEFAULT_COUNT = 500;
 
 export default function App() {
 
   const [ count, setCount ] = useState(500);
+  const [ date , setDate ] = useState(new Date());
+  const [ isShowSessionCount , setIsShowSessionCount ] = useState(false);
+  const [ sessionCount, setSessionCount ] = useState(0);
 
   useEffect(() => {
     if (!localStorage.getItem('currentCount')) {
@@ -13,6 +17,15 @@ export default function App() {
       setCount(DEFAULT_COUNT);
     } else {
       setCount(localStorage.getItem('currentCount'));
+    }
+
+    let timer = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
+
+    // Clean up code
+    return () => {
+      clearInterval(timer);
     }
   }, [])
   
@@ -22,7 +35,20 @@ export default function App() {
 
   const decrement = () => {
     setCount(count => count - 1);
+    setSessionCount(count => count + 1);
+
+    setIsShowSessionCount(true);
+    setTimeout(() => {
+      setIsShowSessionCount(false);
+      setSessionCount(0);
+    }, 10000);
   };
+
+  const updateCount = (e) => {
+    setCount(e.target.value);
+    setSessionCount(0);
+    setIsShowSessionCount(false);
+  }
 
   const reset = (e) => {
     e.stopPropagation();
@@ -49,11 +75,25 @@ export default function App() {
 
   return (
     <div className='container' onClick={decrement}>
+      <div className='timeSection'>
+        <div>{`${new CommonHelper().getDay(date.getDay())}`}</div>
+        <div>{`${new CommonHelper().getDate(date.getDate(), date.getMonth(), date.getFullYear())}`}</div>
+        <div style={{ letterSpacing: 10 }}>{`${new CommonHelper().getTime(date.getSeconds(), date.getMinutes(), date.getHours())}`}</div>
+      </div>
+      {
+        isShowSessionCount &&
+        <div className='sessionCount'>
+          -{sessionCount}
+        </div>
+      }
       <div className='count' style={{ color: getCountColor()}}>{count}</div>
       <div style={{ position: 'absolute', bottom: 50 }}>
         <button className='resetButton' onClick={reset}>
           RESET
         </button>
+      </div>
+      <div className='countInput'>
+        <input type='number' onClick={e => e.stopPropagation()} onChange={updateCount}></input>
       </div>
     </div>
   );
