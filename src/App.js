@@ -51,7 +51,7 @@ export default function App() {
     let timer;
     return (...args) => {
       clearTimeout(timer);
-      timer = setTimeout(() => { func.apply(this, args); }, 50000);
+      timer = setTimeout(() => { func.apply(this, args); }, 5000);
     };
   }
 
