@@ -5,7 +5,7 @@ import CommonHelper from './CommonHelper';
 const DEFAULT_COUNT = 500;
 
 export default function App() {
-
+  
   const [ count, setCount ] = useState(500);
   const [ date , setDate ] = useState(new Date());
   const [ isShowSessionCount , setIsShowSessionCount ] = useState(false);
