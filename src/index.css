@@ -58,13 +58,14 @@ html, body {
     padding-bottom: 50px;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 576px),
+    screen and (max-height: 700px) {
     .timeSection {
         font-size: 40px;
     }
 
     .sessionCount {
-        bottom: 300px;
+        bottom: 200px;
     }
 
     .resetButton {

@@ -47,11 +47,11 @@ export default function App() {
     setSessionCount(0);
   }), []);
   
-  function debounce(func, timeout = 3000){
+  function debounce(func){
     let timer;
     return (...args) => {
       clearTimeout(timer);
-      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+      timer = setTimeout(() => { func.apply(this, args); }, 50000);
     };
   }
 
