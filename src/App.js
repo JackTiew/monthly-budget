@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Constants } from './Constants';
 import CommonHelper from './CommonHelper';
 
@@ -33,16 +33,27 @@ export default function App() {
     localStorage.setItem('currentCount', count);
   }, [count] )
 
+  
   const decrement = () => {
     setCount(count => count - 1);
     setSessionCount(count => count + 1);
 
     setIsShowSessionCount(true);
-    setTimeout(() => {
-      setIsShowSessionCount(false);
-      setSessionCount(0);
-    }, 10000);
+    runSessionTimer();
   };
+
+  const runSessionTimer = useCallback(debounce(() => {
+    setIsShowSessionCount(false);
+    setSessionCount(0);
+  }), []);
+  
+  function debounce(func, timeout = 3000){
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
 
   const updateCount = (e) => {
     setCount(e.target.value);
